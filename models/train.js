@@ -1,9 +1,12 @@
 // train.js
 
-function Train( _id, _name, _description ) {
+function Train( _id, _name, _description, _creator ) {
 	this.id = _id;
 	this.name = _name;
 	this.description = _description;
+	
+	this.creator = _creator;
+	this.updateTime = this.createTime = new Date();
 	
 	this.tags = [];
 }
@@ -22,6 +25,14 @@ Train.prototype.getDescription = function() {
 
 Train.prototype.getCreator = function() {
 	return this.creator;
+}
+
+Train.prototype.getCreateTime = function() {
+	return this.createTime;
+}
+
+Train.prototype.getUpdateTime = function() {
+	return this.updateTime;
 }
 
 Train.prototype.addTag = function( _tag ) {
