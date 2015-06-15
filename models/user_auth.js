@@ -1,4 +1,5 @@
 // user_auth.js
+var uuid = require('node-uuid');
 
 var _Type = {
 	Normal : 'normal',
@@ -7,9 +8,9 @@ var _Type = {
 	Twitter : 'twitter'
 }
 
-function UserAuth( _id, _userId, _method, _key, _token) 
+function UserAuth( _userId, _method, _key, _token) 
 {
-	this.id = _id;
+	this.id = uuid.v1();
 	this.userId = _userId;
 	this.method = _method;
 	this.key = _key;

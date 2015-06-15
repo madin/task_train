@@ -1,7 +1,8 @@
 // user.js
+var uuid = require('node-uuid');
 
-function User( _id, _name, _mail ) {
-	this.id = _id;
+function User( _name, _mail ) {
+	this.id = uuid.v1();
 	this.name = _name;
 	this.mail = _mail;
 }

@@ -1,7 +1,8 @@
 // train.js
+var uuid = require('node-uuid');
 
-function Train( _id, _name, _description, _creator ) {
-	this.id = _id;
+function Train(  _name, _description, _creator ) {
+	this.id = uuid.v1();
 	this.name = _name;
 	this.description = _description;
 	

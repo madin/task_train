@@ -46,6 +46,10 @@ Route.prototype.getDescription = function() {
 };
 
 Route.prototype.addStation = function( _station ) {
+	if(  _station instanceof Station == false ) {
+		throw new InvalidTypeException( _station.constructor.name, 'Station' );
+	}
+	
 	var item = Route.Item( _station );
 	
 	var last = this.stations.length > 0 ? this.stations[this.stations.length-1]:null;

@@ -1,8 +1,9 @@
 // Station.js
+var uuid = require('node-uuid');
 
-function Station( _id, _name ) {
+function Station( _name ) {
 	// constructor
-	this.id = _id;
+	this.id = uuid.v1();
 	this.name = _name;
 }
 
