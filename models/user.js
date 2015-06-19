@@ -1,22 +1,22 @@
 // user.js
-var uuid = require('node-uuid');
+var mongoose = require('mongoose');
 
-function User( _name, _mail ) {
-	this.id = uuid.v1();
-	this.name = _name;
-	this.mail = _mail;
-}
+var UserSchema = mongoose.Schema( {
+	'name':'String',
+	'mail':'String'	
+});
 
-User.prototype.getId = function() {
-	return this.id;
-}
-
-User.prototype.getName = function() {
+UserSchema.methods.getName = function() {
 	return this.name;
-}
+};
 
-User.prototype.getMail = function() {
+UserSchema.methods.getMail = function() {
 	return this.mail;
-}
+};
+
+
+var User = mongoose.model('User', UserSchema);
 
 module.exports = User;
+
+
