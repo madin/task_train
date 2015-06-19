@@ -1,67 +1,41 @@
 // Route.js
-var uuid = require('node-uuid');
+var mongoose = require('mongoose');
 var Station = require('../models/station.js');
+var RouteItem = require('../models/route_item.js');
 var InvalidTypeException = require('../models/exceptions/invalid_type_exception.js');
 
-function Route( _name, _description ) {
-	this.id = uuid.v1();
-	this.name = _name;
-	this.description = _description;
-	
-	this.stations = [];
-}
+var RouteSchema = mongoose.Schema( {
+	name:String,
+	description:String,
+	items:[ { type:mongoose.Schema.Types.ObjectId, ref: 'RouteItem' } ]
+});
 
-Route.Item = function( _station ) {
-	if(  _station instanceof Station == false ) {
-		throw new InvalidTypeException( _station.constructor.name, 'Station' );
-	}
-	
-	this.id = uuid.v1();
-	this.station = _station;
-	this.next = [];
-};
 
-Route.Item.prototype.getStation = function() {
-	return this.station;
-};
-
-Route.Item.prototype.addNext = function( _item ) {
-	if( _item instanceof Route.Item == false ) {
-		throw new InvalidTypeException( _item.constructor.name, 'Route.Item' );
-	}
-	
-	this.next.push( _item );
-};
-
-Route.prototype.getId = function() {
-	return this.id;
-};
-
-Route.prototype.getName = function() {
+RouteSchema.method.getName = function() {
 	return this.name;
 };
 
-Route.prototype.getDescription = function() {
+RouteSchema.method.getDescription = function() {
 	return this.description;
 };
 
-Route.prototype.addStation = function( _station ) {
+RouteSchema.method.addStation = function( _station ) {
 	if(  _station instanceof Station == false ) {
 		throw new InvalidTypeException( _station.constructor.name, 'Station' );
 	}
 	
-	var item = Route.Item( _station );
+	var item = new RouteItem( _station );
 	
-	var last = this.stations.length > 0 ? this.stations[this.stations.length-1]:null;
+	var last = this.items.length > 0 ? this.items[this.items.length-1]:null;
 	if( last ) {
 		last.addNext( item );
 	}
 	
-	this.stations.push( item );	
+	this.items.push( item );	
 };
 
-Route.prototype.removeStation = function( _itemId ) {	
-	this.stations = this.stations.filter( function(e) { return e.id != _itemId; } );
+RouteSchema.method.removeStation = function( _item ) {	
+	this.items = this.items.filter( function(e) { return e._id != _item._id; } );
 };
 
-module.exports = Route;
+module.exports = mongoose.model('Route', RouteSchema);
