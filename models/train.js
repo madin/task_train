@@ -1,64 +1,64 @@
 // train.js
-var uuid = require('node-uuid');
 
-function Train(  _name, _description, _creator ) {
-	this.id = uuid.v1();
-	this.name = _name;
-	this.description = _description;
-	
-	this.creator = _creator;
-	this.updateTime = this.createTime = new Date();
-	
-	this.tags = [];
-}
+var mongoose = require('mongoose');
 
-Train.prototype.getId = function() {
-	return this.id;
-}
 
-Train.prototype.getName = function() {
+var TrainSchema = mongoose.Schema( {
+	'name':String,
+	'description':String,
+	'creatorId':String,
+	'tags':[String],
+	'timeCreate':{type:Date,default:Date.now },
+	'timeUpdate':{type:Date,default:Date.now }
+});
+
+
+TrainSchema.methods.getName = function() {
 	return this.name;
-}
+};
 
-Train.prototype.getDescription = function() {
+TrainSchema.methods.getDescription = function() {
 	return this.description;
-}
+};
 
-Train.prototype.getCreator = function() {
-	return this.creator;
-}
+TrainSchema.methods.getCreatorId = function() {
+	return this.creatorId;
+};
 
-Train.prototype.getCreateTime = function() {
-	return this.createTime;
-}
+TrainSchema.methods.getCreateTime = function() {
+	return this.timeCreate;
+};
 
-Train.prototype.getUpdateTime = function() {
-	return this.updateTime;
-}
+TrainSchema.methods.getUpdateTime = function() {
+	return this.timeUpdate;
+};
 
-Train.prototype.addTag = function( _tag ) {
+TrainSchema.methods.addTag = function( _tag ) {
 	if( this.hasTag( _tag ) == true ) {
 		return;	
 	}
 	
 	this.tags.push( _tag );	
-}
+};
 
-Train.prototype.removeTag = function( _tag ) {
+TrainSchema.methods.removeTag = function( _tag ) {
 	if( this.hasTag( _tag ) == false ) {
 		return;	
 	}
 	
 	this.tags = this.tags.filter( function(e) { return e != _tag; } );
-}
+};
 
-Train.prototype.hasTag = function( _tag ) {
+TrainSchema.methods.hasTag = function( _tag ) {
 	return this.tags.indexOf( _tag ) >= 0;
-}
+};
 
-Train.prototype.getTags = function() {
+TrainSchema.methods.getTags = function() {
 	return this.tags;
-}
+};
+
+
+var Train = mongoose.model('Train', TrainSchema );
 
 
 module.exports = Train;
