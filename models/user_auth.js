@@ -1,42 +1,40 @@
 // user_auth.js
-var uuid = require('node-uuid');
 
-var _Type = {
+var mongoose = require('mongoose');
+
+var UserAuthSchema = mongoose.Schema( {
+	'userId':'String',
+	'method':'String',
+	'key':'String',
+	'token':'String'	
+});
+
+UserAuthSchema.methods.getUserId = function() {
+	return this.userId;
+};
+
+UserAuthSchema.methods.getMethod = function() {
+	return this.method;
+};
+
+UserAuthSchema.methods.getKey = function() {
+	return this.key;
+};
+
+UserAuthSchema.methods.getToken = function() {
+	return this.token;
+};
+
+
+var _Method = {
 	Normal : 'normal',
 	Google : 'google',
 	Facebook : 'facebook',
 	Twitter : 'twitter'
 }
 
-function UserAuth( _userId, _method, _key, _token) 
-{
-	this.id = uuid.v1();
-	this.userId = _userId;
-	this.method = _method;
-	this.key = _key;
-	this.token = _token;
-}
+var UserAuth = mongoose.model('UserAuth', UserAuthSchema);
 
-UserAuth.prototype.getId = function() {
-	return this.id;
-}
-
-UserAuth.prototype.getUserId = function() {
-	return this.userId;
-}
-
-UserAuth.prototype.getMethod = function() {
-	return this.method;
-}
-
-UserAuth.prototype.getKey = function() {
-	return this.key;
-}
-
-UserAuth.prototype.getToken = function() {
-	return this.token;
-}
-
-UserAuth.Type = _Type;
+UserAuth.Method = _Method;
 
 module.exports = UserAuth;
