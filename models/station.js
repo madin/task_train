@@ -1,18 +1,14 @@
 // Station.js
-var uuid = require('node-uuid');
+var mongoose = require('mongoose');
 
-function Station( _name ) {
-	// constructor
-	this.id = uuid.v1();
-	this.name = _name;
-}
+var StationSchema = mongoose.Schema( {
+	'name':'String'
+});
 
-Station.prototype.getId = function() {
-	return this.id;
-}
-
-Station.prototype.getName = function() {
+StationSchema.methods.getName = function() {
 	return this.name;
-}
+};
+
+var Station = mongoose.model('Station', StationSchema);
 
 module.exports = Station;
