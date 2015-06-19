@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var TrainSchema = mongoose.Schema( {
 	'name':String,
 	'description':String,
-	'creatorId':String,
+	'creator': {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 	'tags':[String],
 	'timeCreate':{type:Date,default:Date.now },
 	'timeUpdate':{type:Date,default:Date.now }
@@ -21,8 +21,8 @@ TrainSchema.methods.getDescription = function() {
 	return this.description;
 };
 
-TrainSchema.methods.getCreatorId = function() {
-	return this.creatorId;
+TrainSchema.methods.getCreator = function() {
+	return this.creator;
 };
 
 TrainSchema.methods.getCreateTime = function() {
