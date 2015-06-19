@@ -3,14 +3,14 @@
 var mongoose = require('mongoose');
 
 var UserAuthSchema = mongoose.Schema( {
-	'userId':'String',
+	'user': {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 	'method':'String',
 	'key':'String',
 	'token':'String'	
 });
 
-UserAuthSchema.methods.getUserId = function() {
-	return this.userId;
+UserAuthSchema.methods.getUser = function() {
+	return this.user;
 };
 
 UserAuthSchema.methods.getMethod = function() {
