@@ -1,12 +1,11 @@
-var Exception = require('../models/exception.js');
-var InvalidTypeExcedption = require('../models/exceptions/invalid_type_exception.js');
+var exception = require('../models/exception.js');
 
 module.exports = {	
 	testException: function(test) {
-		var exception = new InvalidTypeExcedption( 't', 'd' );
+		var e = new exception.InvalidTypeException( 't', 'd' );
 		
-		test.ok( exception instanceof Exception );
-		test.equal( exception.getMessage(), 'Required type is d, but t' );
+		test.ok( e instanceof exception.Exception );
+		test.equal( e.message, 'Required type is d, but t' );
 		test.done();
 	}
 }

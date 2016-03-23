@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 var Station = require('../models/station.js');
 var RouteItem = require('../models/route_item.js');
-var InvalidTypeException = require('../models/exceptions/invalid_type_exception.js');
+var exception = require('../models/exception.js');
 
 var RouteSchema = mongoose.Schema( {
 	name:String,
@@ -21,7 +21,7 @@ RouteSchema.method.getDescription = function() {
 
 RouteSchema.method.addStation = function( _station ) {
 	if(  _station instanceof Station == false ) {
-		throw new InvalidTypeException( _station.constructor.name, 'Station' );
+		throw new exception.InvalidTypeException( _station.constructor.name, 'Station' );
 	}
 	
 	var item = new RouteItem( _station );
